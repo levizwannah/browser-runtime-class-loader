@@ -69,7 +69,3 @@ async function __require(className){
 async function __include(className){
     return await __CL.include(className);
 }
-
-function func(name, body){
-    window[name] = body;
-}
