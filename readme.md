@@ -1,5 +1,5 @@
 # Loading Classes at runtime (Browser) - non module-based JS
-The code in `class-loader.js` will load a class with the name `<ClassName>.js`. I wrote this so that I don't include every class JS file using a script tag in the html page but rather allow the consuming JS file to load the class itself doing execution. 
+The code in `class-loader.js` will load a class with the name `<ClassName>.js`. I wrote this so that I don't include every class JS file using a script tag in the html page but rather allow the consuming JS file to load the class itself during execution. 
 
 ## Using the code
 Firstly, you must load the `class-loader.js` file in the file that holds your html code followed by any script that consumes classes. For example, the index.html file included the class-loader.js file followed by the logic.js file.  
