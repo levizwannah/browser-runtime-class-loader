@@ -2,8 +2,21 @@
  * Loads a class
  */
 class ClassLoader{
+    /**
+     * The Directory or URL in which all JS files are located
+     */
     dir = ".";
+
+    /**
+     * The extension of the files
+     */
     extension = ".js";
+
+    /**
+     * The version of the files. It will be appended as ?v=1.0 for example
+     * This enable fresh reloading if necessary
+     */
+    version = "1.0.0";
 
     /**
      * 
@@ -23,7 +36,7 @@ class ClassLoader{
 
         if(window[className]) return;
 
-        let response = await fetch(`${this.dir}/${className}${this.extension}`);
+        let response = await fetch(`${this.dir}/${className}${this.extension}?v=${this.version}`);
 
         let jsCode = await response.text();
         window[className] = Function( `return (${jsCode})`)();

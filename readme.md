@@ -4,9 +4,11 @@ The code in `class-loader.js` will load a class with the name `<ClassName>.js`. 
 ## Using the code
 Firstly, you must load the `class-loader.js` file in the file that holds your html code followed by any script that consumes classes. For example, the index.html file included the class-loader.js file followed by the logic.js file.  
   
-The `class-loader.js` will add a `ClassLoader` object to the `window` global scope called `__CL`. The __CL object contains two properties: `extension` and `dir`. The `extension` property has a default string value `'.js'` because we are expecting to load a JS file. You can change it to `.ts` or other extensions by calling `__CL.extension = '.My-Extension` anywhere in the consumer scripts. This is seen in the `logic.js` file.   
+The `class-loader.js` will add a `ClassLoader` object to the `window` global scope called `__CL`. The __CL object has three properties: `extension`, `dir`, and `version`. The `extension` property has a default string value `'.js'` because we are expecting to load a JS file. You can change it to `.ts` or other extensions by calling `__CL.extension = '.My-Extension` anywhere in the consumer scripts. This is seen in the `logic.js` file.   
 
 The `dir` property is used to set where the files loaded are found. For example, the code given above has its classes in the `classes` folder. That is why we set the `__CL.dir` to `'./classes'` in the `logic.js`. The `dir` property can also be ***a url***. However, note that the loader loads the file found at `dir/ClassName.js`; The URL helps if you are loading files from a CDN.
+
+The `version` property is used to load a fresh file when the JS script is updated. This is because the browser caches the response for files like JS, hence if there is a change to the file, it won't be reflected. To override this, set the version of the `__CL` object. This will be appended as `?v=1.0` for example when fetching the JS file.
 
 ## finally
 Ensure that your code is wrapped in an `async function` - (loading files is async);

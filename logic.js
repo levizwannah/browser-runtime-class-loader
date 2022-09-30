@@ -1,6 +1,7 @@
 
 __CL.dir = "./classes"; // set the directory or url where the JS file can be found
 __CL.extension = ".js"; // set the extension of the loaded file
+__CL.version = "1.0.0"
 
 
 (async e => {
