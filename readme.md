@@ -17,15 +17,48 @@ In the `logic.js`, you can see:
     await __require("Bar"); // throws exception
     await __include("Foo") // throws no exception
 
-    let foo = new Foo();
-    let bar = new Bar();
+    let foo = new Foo(); // locally scoped
+    let bar = new Bar(); // locally scoped
 
+    this.foo = new Foo(); // globally scoped
+    this.bar = new Bar(); // globally scoped
+
+    function hello(){} // local scope
+
+    this.hello = () => {}; globally scoped function
+    this.yes = function(){} globally scoped function
     // ... more code here
 
 })();
 ```
 > The code is wrapped in an anonymous async function that calls it self.  
-In summary, the  `await __require("ClassName")` and `await __include("ClassName")` must be in an `async` function because they must be preceded by `await`.  
+In summary, the  `__require("ClassName")` and `__include("ClassName")` must be in an `async` function because they must be preceded by `await`.   
+
+## NOTE (Global variables and Functions)
+The `this` keyword in the anonymous function refers to the global `window` object. So, to make variables and functions globally scoped so that they can be accessed across multiple scripts, add them to the window object. for example, a variable declared like this, `let foo = new Foo()`, is only accessible inside the  anonymous function. To make the `foo` variable global, i.e it is accessible in html files and other JS files, add it to the window, like so `this.foo = new Foo()`.  
+The same is true for functions, a function created like any of the below will be locally scoped.
+```
+function x(){
+    // code
+}
+
+let y = () => {};
+
+const z = function(){};
+```
+
+To make a function globally scoped, you must use the `this` keyword. For example, `this.x = function(){ // ... code }`
+
+> However, a variable declared like `foo = new Foo()` without the `let` or `var` keyword is globally scoped. Use what works for you.  
+
+> Another Plus is that, you get module behavior without actually using modules.
+
+## JS functions in HTML files
+See the below html code
+```
+<button onclick='doSomething()'>Click Me</button>
+```
+For `doSomething()` to actually be called, it must be in the window object. Therefore, ensure that `doSomething()` is globally scoped by following the instructions in the previous section.
 
 ## Security
 I didn't use the `eval` function which is slow and less secure, I used the `Function` constructor which is by magnitude faster and secure.

@@ -10,8 +10,8 @@ __CL.extension = ".js"; // set the extension of the loaded file
     await __require("Bar"); // throws exception when file is not found
     await __include("Foo") // throws no exception when file is not found
 
-    let foo = new Foo();
-    let bar = new Bar();
+    this.foo = new Foo();
+    this.bar = new Bar();
 
-    // ... more code here
+
 })();
