@@ -67,7 +67,7 @@ I didn't use the `eval` function which is slow and less secure, I used the `Func
 
 # To use this in your project, include this script in your project
 ```html 
-<script href="https://cdn.jsdelivr.net/gh/levizwannah/browser-runtime-class-loader@latest"></script>
+<script href="https://cdn.jsdelivr.net/gh/levizwannah/browser-runtime-class-loader@latest/class-loader.js"></script>
 ```
 
 ## Inspiration
