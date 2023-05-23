@@ -13,7 +13,7 @@ The `version` property is used to load a fresh file when the JS script is update
 ## finally
 Ensure that your code is wrapped in an `async function` - (loading files is async);
 In the `logic.js`, you can see:
-```
+```javascript
 (async e => {
 
     await __require("Bar"); // throws exception
@@ -64,6 +64,11 @@ For `doSomething()` to actually be called, it must be in the window object. Ther
 
 ## Security
 I didn't use the `eval` function which is slow and less secure, I used the `Function` constructor which is by magnitude faster and secure.
+
+# To use this in your project, include this script in your project
+```html 
+<script href="https://cdn.jsdelivr.net/gh/levizwannah/browser-runtime-class-loader@latest"></script>
+```
 
 ## Inspiration
 > I am lazy ... hate unnecessary redundancy
