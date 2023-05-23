@@ -1,10 +1,36 @@
-# Loading Classes at runtime (Browser) - non module-based JS
+# Load your JS Classes (Files) from another JS file in the browser. NO FRAMEWORK NEEDED
+
+## Loading Classes at runtime (Browser) - non module-based JS
 The code in `class-loader.js` will load a class with the name `<ClassName>.js`. I wrote this so that I don't include every class JS file using a script tag in the html page but rather allow the consuming JS file to load the class itself during execution. 
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/levizwannah/browser-runtime-class-loader@latest/class-loader.min.js"></script>
+```
 
 ## Using the code
 Firstly, you must load the `class-loader.js` file in the file that holds your html code followed by any script that consumes classes. For example, the index.html file included the class-loader.js file followed by the logic.js file.  
+
+```html
+<body>
+    <h1>Test JS Class loader</h1>
+    <p>Check the consoler</p>
+    <p>And read the code as well (mainly the logic.js)</p>
+
+    <!-- Include this first -->
+    <script src="https://cdn.jsdelivr.net/gh/levizwannah/browser-runtime-class-loader@latest/class-loader.min.js"></script>
+    <!-- Then include the other scripts that use the classes -->
+    <script src="logic.js"></script>
+    
+</body>
+```
   
-The `class-loader.js` will add a `ClassLoader` object to the `window` global scope called `__CL`. The __CL object has three properties: `extension`, `dir`, and `version`. The `extension` property has a default string value `'.js'` because we are expecting to load a JS file. You can change it to `.ts` or other extensions by calling `__CL.extension = '.My-Extension` anywhere in the consumer scripts. This is seen in the `logic.js` file.   
+The `class-loader.js` will add a `ClassLoader` object to the `window` global scope called `__CL`. The `__CL` object has three properties: `extension`, `dir`, and `version`. The `extension` property has a default string value `'.js'` because we are expecting to load a JS file. You can change it to `.ts` or other extensions by calling `__CL.extension = '.My-Extension` anywhere in the consumer scripts. This is seen in the `logic.js` file.   
+
+```javascript
+__CL.dir = "./classes"; // set the directory or url where the JS file can be found
+__CL.extension = ".js"; // set the extension of the loaded file
+__CL.version = "1.0.0"
+```
 
 The `dir` property is used to set where the files loaded are found. For example, the code given above has its classes in the `classes` folder. That is why we set the `__CL.dir` to `'./classes'` in the `logic.js`. The `dir` property can also be ***a url***. However, note that the loader loads the file found at `dir/ClassName.js`; The URL helps if you are loading files from a CDN.
 
@@ -39,7 +65,7 @@ In summary, the  `__require("ClassName")` and `__include("ClassName")` must be i
 ## NOTE (Global variables and Functions)
 The `this` keyword in the anonymous function refers to the global `window` object. So, to make variables and functions globally scoped so that they can be accessed across multiple scripts, add them to the window object. for example, a variable declared like this, `let foo = new Foo()`, is only accessible inside the  anonymous function. To make the `foo` variable global, i.e it is accessible in html files and other JS files, add it to the window, like so `this.foo = new Foo()`.  
 The same is true for functions, a function created like any of the below will be locally scoped.
-```
+```javascript
 function x(){
     // code
 }
@@ -57,7 +83,7 @@ To make a function globally scoped, you must use the `this` keyword. For example
 
 ## JS functions in HTML files
 See the below html code
-```
+```html
 <button onclick='doSomething()'>Click Me</button>
 ```
 For `doSomething()` to actually be called, it must be in the window object. Therefore, ensure that `doSomething()` is globally scoped by following the instructions in the previous section.
@@ -67,7 +93,7 @@ I didn't use the `eval` function which is slow and less secure, I used the `Func
 
 # To use this in your project, include this script in your project
 ```html 
-<script href="https://cdn.jsdelivr.net/gh/levizwannah/browser-runtime-class-loader@latest/class-loader.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/levizwannah/browser-runtime-class-loader@latest/class-loader.min.js"></script>
 ```
 
 ## Inspiration
